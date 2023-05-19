@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Gif } from '../../interfaces/gifs.interfaces';
 
 @Component({
   selector: 'gifs-card-list',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class CardListComponent {
 
+  //CREAMOS ESTE INPUT PARA QUE PUEDA ALMACENAR TODA LA INFORMACIÓN ENVIADA DESDE EL PADRE 'Home-page' HACIA ESTE COMPONENTE HIJO 'CardListComponent'
+  @Input()
+  public listgifs: Gif[] = [];
 }

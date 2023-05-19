@@ -6,6 +6,8 @@
 
     <div class="col-12 pt-2">
         <!-- Listado de gifs -->
-        <gifs-card-list></gifs-card-list>
+        <!-- A LA PROPIEDAD '[listgifs]' LE ESTAMOS ASIGNANDO TODOS LOS VALORES OBTENIDOS DEL METODO 'gifsListado' UBICADO EN EL COMPONENTE PADRE DE 'home-page.components.ts'-->
+        <!-- ES DECIR, TODA LA INFORMACIÓN OBTENIDA EN EL PADRE SE LA ESTAMOS DANDO AL HIJO PARA QUE LO MUESTRE -->
+        <gifs-card-list [listgifs]="gifsListado"></gifs-card-list>
     </div>
 </div>

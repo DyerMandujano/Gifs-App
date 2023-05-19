@@ -1,10 +1,21 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Gif, SearchResponse } from '../interfaces/gifs.interfaces';
 
 @Injectable({providedIn: 'root'})
 export class GifsService {
 
+    //CREAMOS EL ARRAY 'listaGifs'  DE TIPO INTERFACE 'Gif' Y LO INICIALIZAMOS VACIO
+    public listaGifs: Gif[] = [];
+
     //CREAMOS ESTE ARRAY DE TIPO STRING DE MANERA PRIVADA PARA QUE NO PUEDA SER MDOFICADA FUERA DE ESTE SERVICIO
     private _tagsHistory: string[] = [];
+    private apikey: string = 'mZLbdnXCPjNDJN8OCG4HU0CaUMiUulNy';
+    private serviceUrl: string = 'http://api.giphy.com/v1/gifs';
+
+    constructor(private http:HttpClient){
+
+    }
 
     //*Y UTILIZAMOS ESTE GETTER PARA EXPONER ES ARRAY '_tagsHistory' SIN NECESIDAD DE QUE SEA MODIFICADO EN OTROS ARCHIVOS Y SOLO PUEDAN OBTENER SU VALOR.
     public get tagsHistory(){
@@ -43,8 +54,29 @@ export class GifsService {
         if(tag == "") return;
         this.organizeHistory(tag)
 
+        //CREAMOS UNA CONSTANTE 'parametros' PARA QUE LA URL SEA MÁS LEGIBLE Y PERSONALIZABLE AL MOMENTO DE PASARLE LOS RESPECTIVOS PARAMETROS
+        const parametros = new HttpParams()
+        //?EN EL METODO 'SET' DEBEMOS COLOCARLE COMO PRIMER PARAMETROS, UN NOMBRE CLAVE QUE VA A TENER EL PARAMETRO Y COMO SEGUNDO PARAMETRO, EL VALOR QUE VA A TENER ESE PARAMETRO. 
+                    //*.set('nom_clave',nom_variable)
+                       .set('api_key', this.apikey)
+                       .set('limit', 15)
+                       .set('q', tag)
+
+        //REALIZACION DE PETICION HTTP 'GET'
+        //?DENTRO DEL PARAMETRO DEL METODO GET COLOCAMOS LA URL EN STRING. SIN EMBARGO, PARA SIMPLIFICAR ESA URL Y NO SE VEA TAN EXTENSA, UTILIZAMOS CONSTANTES O VARIABLES DE ENTORNO
+        //*EL METODO 'GET' NOS VA A DEVOLVER UN OBSERVABLE, POR LO CUAL TIENE QUE UTILIZARCE EL METODO 'subscribe' PARA PODER ESCUCHAR LAS EMISIONES QUE EL OBJETO ESTÉ EMITIENDO
+        //!NOTA: EN ESTE CASO SOLO QUEREMOS OBTENER LA DATA DE LOS GIFS DE LA INTERFACE 'SearchResponse'. SIN EMBARGO, AL METODO 'GET' LE DEBEMOS DECIR DE QUE TIPO ES PARA QUE NOS DEVUELVE EL OBSERVABLE DE ESE MISMO TIPO, QUE EN ESTE CASO SERÁ LA INTERFACE 'SearchResponse' EL CUAL LO COLOCAREMOS ENTRE '<>'
+        this.http.get<SearchResponse>( `${this.serviceUrl}/search?`,{params:parametros}).subscribe(resp =>{
+            console.log(`SE HA REALIZADO LA CONSULTA GET DE ${tag} CON EXITO` );
+            //AL ARRAY 'listaGifs' SE LE ASIGNARÁ TODOS LOS VALORES OBTENIDOS DE 'resp.data'
+            //!NOTA: LA PROPIEDAD 'data' VIENE DE LA INTERFACE GENERAL 'SearchResponse'. ESTA PROPIEDAD 'data' ES UN ARRAY Y ES DE TIPO INTERFACE 'Gifs' POR LO CUAL ES COMPATIBLE CON EL ATRIBUTO 'listaGifs'
+            this.listaGifs = resp.data;
+            console.log({gifs: this.listaGifs})
+            
+            
+        })
+       
     }
 
-    constructor() { }
     
 }
