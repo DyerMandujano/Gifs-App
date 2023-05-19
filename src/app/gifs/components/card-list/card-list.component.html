@@ -1,7 +1,15 @@
 <div class="row">
     <div *ngFor="let item_gif of listgifs" class="col-md-3 col-sm-6">
         <div class="card mb-2 text-center bg-primary ">
-            <!-- TODO: Crear Imagen -->
+            
+            <!--NOTA:PARA COLOCAR UN VALOR QUE SEA UNA EXPRESION DE JAVASCRIPT A ALGUN ATRIBUTO HTML EN ANGULAR, DEBEMOS COLOCAR ESOS ATRIBUTOS ENTRE '[]'. ES DECIR, DE ESTA MANERA HACEMOS EL BINDING DEL VALOR DE UNA EXPRESION A UN ATRIBUTO HTML    -->
+            <img 
+            [src]="item_gif.images.downsized_medium.url" 
+            [alt]="item_gif.title"
+            class="card-img-top"
+            >
+
+
             <div class="card-body text-white">
                 <p class="card-text ">
                     {{item_gif.title}}

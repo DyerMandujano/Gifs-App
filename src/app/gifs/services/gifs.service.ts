@@ -14,8 +14,11 @@ export class GifsService {
     private serviceUrl: string = 'http://api.giphy.com/v1/gifs';
 
     constructor(private http:HttpClient){
-
+        //CUANDO EL SERVICIO SEA INYECTADO POR PRIMERA VEZ, SE LLAMARÁ AL METODO 'loadLocalStorage'
+        this.loadLocalStorage();
+        console.log("Servicio de Gifs Iniciado")
     }
+
 
     //*Y UTILIZAMOS ESTE GETTER PARA EXPONER ES ARRAY '_tagsHistory' SIN NECESIDAD DE QUE SEA MODIFICADO EN OTROS ARCHIVOS Y SOLO PUEDAN OBTENER SU VALOR.
     public get tagsHistory(){
@@ -45,9 +48,36 @@ export class GifsService {
         //?NOTA 2: EL METODO SPLICE DEVUELVE/RETORNA EL ARRAY ELIMINADO
         //*ES POR ELLO QUE EN ESTA LINEA DE CODIGO SE LE ESTA ASIGNANDO AL ARRAY '_tagsHistory' LOS ELEMENTOS ELIMINADOS GRACIAS AL METODO SPLICE PARA QUE DE ESTA MANERA SIEMPRE NOS DEVUELA LOS 10 ELEMENTOS QUE SE MOSTRARÁN EN PANTALLA
         this._tagsHistory = this._tagsHistory.splice(0,10);
+        this.saveLocalStorage();
         console.log("DESPUES DE SPLICE",this._tagsHistory)
 
     }
+
+
+    private saveLocalStorage():void{
+        localStorage.setItem('history',JSON.stringify(this._tagsHistory))
+    }
+
+
+
+    private loadLocalStorage():void{
+        //SI NO TENEMOS DATA
+        if(!localStorage.getItem('history')){
+            //TERMINA LA FUNCION
+            return
+        }
+    //DE LO CONTRARIO SI TIENE DATA, DESEARIALIZAMOS LO QUE SE ENCUENTRA EN EL LOCALSTORAGE Y LE ASIGNAMOS TODOS ESOS VALORES A LA PROPIEDAD '_tagsHistory'
+    //!NOTA: LE COLOCAMOS EL SIMBOLO '!' AL FINAL DEL PARENTESIS DEL 'getItem' YA QUE DE ESTA MANERA LE ESTAMOS DICIENDO QUE SIEMPRE OBTENDRÁ UN VALOR Y QUE NUNCA SERÁ NULO.   
+      this._tagsHistory =JSON.parse(localStorage.getItem('history')!);
+
+      //SI EL ARRAY '_tagsHistory' NO TIENE NINGUN ELEMENTO, TERMINA LA FUNCION
+      if(this._tagsHistory.length === 0){ return }
+      //DE LO CONTRARIO, HACEMOS USO DEL SERVICIO MEDIANTE EL METODO 'BuscadorTag' Y LE PASAMOS COMO ARGUMENTO EL PRIMER INDICE DEL ARRAY '_tagsHistory' 
+      //*ESTO SE MOSTRARÁ CADA VEZ QUE INICIEMOS LA APLICACION SIEMPRE Y CUANDO SE TENGA COMO MINIMO UN ELEMENTO EN EL ARRAY '_tagsHistory'
+      this.BuscadorTag(this._tagsHistory[0]);
+    }
+
+
 
     //EN ESTE METODO GUARDARÁ CADA TAG QUE SE BUSQUE EN EL ARRAY '_tagsHistory'
     BuscadorTag( tag: string):void{
@@ -78,5 +108,6 @@ export class GifsService {
        
     }
 
+    
     
 }
