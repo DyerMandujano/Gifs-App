@@ -1,0 +1,21 @@
+<div class="card mb-2 text-center bg-primary ">    
+    <shared-lazy-image
+    [url]="gifs.images.downsized_medium.url"
+    [alt]="gifs.title || 'No Title' "
+    ></shared-lazy-image>
+    
+    <!-- NOTA:PARA COLOCAR UN VALOR QUE SEA UNA EXPRESION DE JAVASCRIPT A ALGUN ATRIBUTO HTML EN ANGULAR, DEBEMOS COLOCAR ESOS ATRIBUTOS ENTRE '[]'. ES DECIR, DE ESTA MANERA HACEMOS EL BINDING DEL VALOR DE UNA EXPRESION A UN ATRIBUTO HTML     -->
+    <!-- NOTA2: POR LO CUAL, MEDIANTE LA PROPIEDAD 'gifs' (declarada en el componente 'gifs-card') PODREMOS ACCEDER A TODAS LAS DEMAS PROPIEDADES DE LA INTERFACE 'Gif' -->
+    <!-- <img 
+    [src]="gifs.images.downsized_medium.url" 
+    [alt]="gifs.title"
+    class="card-img-top"
+    > -->
+
+
+    <div class="card-body text-white">
+        <p class="card-text ">
+            {{gifs.title || 'No Title'}}
+        </p>
+    </div>    
+</div>

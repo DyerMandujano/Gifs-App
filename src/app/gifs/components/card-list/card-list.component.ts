@@ -8,8 +8,8 @@ import { Gif } from '../../interfaces/gifs.interfaces';
 })
 export class CardListComponent {
 
-  //CREAMOS ESTE INPUT PARA QUE PUEDA ALMACENAR TODA LA INFORMACIÓN ENVIADA DESDE EL PADRE 'Home-page' HACIA ESTE COMPONENTE HIJO 'CardListComponent'
-  @Input()
-  public listgifs: Gif[] = [];
+    //CREAMOS ESTE INPUT PARA QUE PUEDA ALMACENAR TODA LA INFORMACIÓN ENVIADA DESDE EL PADRE 'Home-page' HACIA ESTE COMPONENTE HIJO 'CardListComponent'
+    @Input()
+    public listgifs: Gif[] = [];
 
 }

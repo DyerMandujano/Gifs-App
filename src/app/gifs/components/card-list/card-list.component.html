@@ -1,8 +1,27 @@
 <div class="row">
+
+    <!-- PRIMERO: EN EL ngFor RECORREMOS TODOS LOS VALORES QUE TIENE EL ARRAY 'listgifs' DEL COMPONENTE PADRE 'card-list'  Y TODOS ESTOS VALORES SE ALMACENARÁ EN LA VARIABLE 'item_gif'
+    SEGUNDO: LA VARIABLE 'item_gif' LE ASIGNARÁ TODOS SUS VALORES A LA PROPIEDAD '[gifs]' QUE SE ENCUENTRA EN EL COMPONENTE HIJO 'gifs-card'-->
+    <gifs-card
+    *ngFor="let item_gif of listgifs"
+    [gifs]="item_gif"
+    class="col-md-3 col-sm-6" ></gifs-card>
+
+</div>
+
+
+
+
+
+
+
+
+  <!--  
     <div *ngFor="let item_gif of listgifs" class="col-md-3 col-sm-6">
+
         <div class="card mb-2 text-center bg-primary ">
             
-            <!--NOTA:PARA COLOCAR UN VALOR QUE SEA UNA EXPRESION DE JAVASCRIPT A ALGUN ATRIBUTO HTML EN ANGULAR, DEBEMOS COLOCAR ESOS ATRIBUTOS ENTRE '[]'. ES DECIR, DE ESTA MANERA HACEMOS EL BINDING DEL VALOR DE UNA EXPRESION A UN ATRIBUTO HTML    -->
+            NOTA:PARA COLOCAR UN VALOR QUE SEA UNA EXPRESION DE JAVASCRIPT A ALGUN ATRIBUTO HTML EN ANGULAR, DEBEMOS COLOCAR ESOS ATRIBUTOS ENTRE '[]'. ES DECIR, DE ESTA MANERA HACEMOS EL BINDING DEL VALOR DE UNA EXPRESION A UN ATRIBUTO HTML    
             <img 
             [src]="item_gif.images.downsized_medium.url" 
             [alt]="item_gif.title"
@@ -17,4 +36,5 @@
             </div>    
         </div>
     </div>
-</div>
+-->
+

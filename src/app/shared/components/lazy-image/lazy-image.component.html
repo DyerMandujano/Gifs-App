@@ -1,0 +1,25 @@
+<div class="d-flex justify-content-center">
+    <!--NOTA: LAS IMAGENES EN ANGULAR TIENEN UN EVENTO LLAMADO '(load)', ESTE EVENTO SE ACTIVA CUANDO SE TERMINA DE CARGAR COMPLETAMENTE LA IMAGEN. 
+    POR LO TANTO, CUANDO SUCEDA EL EVENTO '(load)', SE LLAMARÁ AL METODO 'onLoad()' -->
+    
+    <!--NOTA2: En la directiva '[ngStyle]' SE ESTÁ DEFINENDO EL ESTILO 'display'. PARA ELLO SE ESTÁ UTILIZANDO UNA EXPRESIÓN TERNARIA que evalúa si la variable 'hasLoaded' es verdadera o falsa. POR LO CUAL SI LA PROPIEDAD 'hasLoaded' ES TRUE, se aplica un estilo vacío (''), lo cual es equivalente a 'display: block', lo que muestra el elemento. DE LO CONTRARIO, SI ES FALSA SE APLICA EL ESTILO 'display: none', EL CUAL OCULTA EL ELEMENTO -->
+    <img [src]="url" 
+        [alt]="alt" 
+        class="card-img-top animate__animated animate__fadeIn"
+        (load)="onLoad()"
+        [ngStyle]="{display: hasLoaded ? '' : 'none'}"
+        >
+
+        <!-- COLOCANDO LOADER -->
+        <!---------------------->
+        <!--EN EL ngIf ESTAMOS HACIENDO LA NEGACION DE LA PROPIEDAD 'hasLoaded'(esta propiedad se encuentra en el lazy-image.component.ts), EL CUAL SU VALOR INICIAL ES 'false' POR LO TANTO AL REALIZAR LA NEGACIÓN CON EL SIMBOLO '!' SE CONVERTIRÁ EN TRUE. ES DECIR, ESTA IMAGEN DE 'loading' SE MOSTRARIA EN LA PAGINA -->
+
+        <!-- POR OTRO LADO, UNA VEZ SE HAYA CARGADO LA IMAGEN PRINCIPAL, ESTA ETIQUETA SE OCULTARIA YA QUE CAMBIARIA EL VALOR INICIAL DE LA PROPIEDAD 'hasLoaded' QUE ES 'false' A 'true' GRACIAS AL METODO 'onLoad()' LLAMADO POR EL EVENTO '(load)' DE LA PRIMERA ETIQUETA 'img' Y CON LA NEGACION UTILIZADA DENTRO DEL *ngIf, SE VOLVERIA NUEVAMENTE 'false' Y ESTO OCULTARIA LA IMAGEN DE LOADING -->
+    <img 
+        *ngIf="!hasLoaded"
+        src="assets/loader.svg" 
+        height="35"
+        width="35"
+        class="mt-3" 
+        >
+</div>
