@@ -26,6 +26,7 @@ export class LazyImageComponent implements OnInit {
   //METODO QUE SE UTILIZARÁ CUANDO YA SE CARGO LA IMAGEN
   onLoad(){
     setTimeout(()=>{
+      //CAMBIA EL VALOR INICIAL DE LA PROPIEDAD hasLoaded a 'true'
       this.hasLoaded = true;
     },1000)
     
